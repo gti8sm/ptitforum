@@ -3,7 +3,7 @@
         <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div class="min-w-0">
                 <div class="text-sm text-gray-600">
-                    <a href="{{ route('dashboard') }}" class="hover:text-gray-900 transition">Mes groupes</a>
+                    <a href="{{ route('dashboard') }}" class="hover:text-gray-900 transition">Groupes</a>
                     <span class="text-gray-400">/</span>
                     <a href="{{ route('groups.show', $group) }}" class="hover:text-gray-900 transition">{{ $group->name }}</a>
                     <span class="text-gray-400">/</span>
@@ -181,7 +181,7 @@
                                         </div>
 
                                         <div>
-                                            <label for="assigned_to" class="block text-sm font-semibold text-gray-900">Assignée à (id user, optionnel)</label>
+                                            <label for="assigned_to" class="block text-sm font-semibold text-gray-900">Assignée à (ID utilisateur, optionnel)</label>
                                             <input id="assigned_to" name="assigned_to" type="number" class="mt-2 block w-full rounded-2xl border-gray-200 bg-white focus:border-gray-400 focus:ring-gray-400" />
                                             @error('assigned_to')
                                                 <div class="mt-2 text-sm text-red-600">{{ $message }}</div>
@@ -222,7 +222,9 @@
                                             {{ $r->status === 'no' ? 'text-red-700' : '' }}
                                             {{ $r->status === 'maybe' ? 'text-amber-700' : '' }}
                                         ">
-                                            {{ $r->status }}
+                                            {{ $r->status === 'yes' ? 'je viens' : '' }}
+                                            {{ $r->status === 'no' ? 'absent' : '' }}
+                                            {{ $r->status === 'maybe' ? 'peut-être' : '' }}
                                         </div>
                                     </div>
                                     @if($r->comment)

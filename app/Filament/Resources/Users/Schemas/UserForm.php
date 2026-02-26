@@ -15,18 +15,22 @@ class UserForm
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->label('Nom')
                     ->required(),
                 TextInput::make('email')
-                    ->label('Adresse email')
+                    ->label('Adresse e-mail')
                     ->email()
                     ->required(),
-                DateTimePicker::make('email_verified_at'),
+                DateTimePicker::make('email_verified_at')
+                    ->label('E-mail vérifié le'),
                 TextInput::make('password')
+                    ->label('Mot de passe')
                     ->password()
                     ->required(fn (string $operation): bool => $operation === 'create')
                     ->dehydrated(fn (?string $state): bool => filled($state))
                     ->dehydrateStateUsing(fn (string $state): string => Hash::make($state)),
                 Select::make('role')
+                    ->label('Rôle')
                     ->required()
                     ->options([
                         'member' => 'Membre',

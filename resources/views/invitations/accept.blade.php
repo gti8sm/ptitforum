@@ -17,7 +17,7 @@
         </div>
 
         <div class="mt-4">
-            <x-input-label for="email" value="Email" />
+            <x-input-label for="email" value="E-mail" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" value="{{ $invitation->email }}" disabled />
         </div>
 

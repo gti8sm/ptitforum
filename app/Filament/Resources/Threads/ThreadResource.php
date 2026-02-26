@@ -20,6 +20,14 @@ class ThreadResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    protected static ?string $navigationLabel = 'Sujets';
+
+    protected static ?string $modelLabel = 'Sujet';
+
+    protected static ?string $pluralModelLabel = 'Sujets';
+
+    protected static ?string $navigationGroup = 'Forum';
+
     public static function form(Schema $schema): Schema
     {
         return ThreadForm::configure($schema);

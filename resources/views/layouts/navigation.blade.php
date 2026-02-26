@@ -20,7 +20,7 @@
                     </x-nav-link>
 
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('groups.*') || request()->routeIs('planning.*') || request()->routeIs('threads.*')">
-                        Mes groupes
+                        Groupes
                     </x-nav-link>
 
                     @if($currentGroup)
@@ -102,16 +102,7 @@
                                 @csrf
                                 <button type="submit" class="w-full inline-flex items-center justify-center px-3 py-2 rounded-lg bg-white border border-gray-200 text-sm font-semibold text-gray-900 hover:bg-gray-50 transition">
                                     Tout marquer comme lu
-             div class="px-4 pt-2">
-                <form method="POST" action="{{ route('notifications.mark-all-read') }}">
-                    @csrf
-                    <button type="submit" class="w-full inline-flex items-center justify-center px-3 py-2 rounded-lg bg-white border border-gray-200 text-sm font-semibold text-gray-900 hover:bg-gray-50 transition">
-                        Notifications : tout marquer comme lu
-                    </button>
-                </form>
-            </div>
-
-            <                   </button>
+                                </button>
                             </form>
                         </x-slot>
                     </x-dropdown>
@@ -169,7 +160,7 @@
             </x-responsive-nav-link>
 
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('groups.*') || request()->routeIs('planning.*') || request()->routeIs('threads.*')">
-                Mes groupes
+                Groupes
             </x-responsive-nav-link>
 
             @if($currentGroup)

@@ -15,6 +15,7 @@ class GroupForm
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->label('Nom')
                     ->required()
                     ->live(onBlur: true)
                     ->afterStateUpdated(function (?string $state, callable $set): void {
@@ -25,10 +26,13 @@ class GroupForm
                         $set('slug', Str::slug($state));
                     }),
                 TextInput::make('slug')
+                    ->label('Slug')
                     ->required(),
                 Textarea::make('description')
+                    ->label('Description')
                     ->columnSpanFull(),
                 Toggle::make('is_private')
+                    ->label('Privé')
                     ->required(),
             ]);
     }

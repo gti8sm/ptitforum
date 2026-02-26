@@ -14,14 +14,16 @@ class InvitationForm
         return $schema
             ->components([
                 TextInput::make('email')
-                    ->label('Adresse email')
+                    ->label('Adresse e-mail')
                     ->email()
                     ->required(),
                 Select::make('group_id')
+                    ->label('Groupe')
                     ->relationship('group', 'name')
                     ->searchable()
                     ->preload(),
-                DateTimePicker::make('expires_at'),
+                DateTimePicker::make('expires_at')
+                    ->label('Expire le'),
             ]);
     }
 }

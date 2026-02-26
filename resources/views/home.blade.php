@@ -5,14 +5,20 @@
                 Forum privé • Sur invitation
             </div>
 
-            <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-gray-900">PtitForum</h1>
-            <p class="mt-3 text-gray-700">Un espace joyeux et simple pour organiser les discussions de votre troupe : décor, costumes, répétitions, planning, idées…</p>
+            <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-gray-900">P'tit Forum</h1>
+            <p class="mt-3 text-gray-700">Un espace simple pour organiser les discussions de ta troupe : décor, costumes, répétitions, planning, idées…</p>
         </div>
 
         <div class="mt-8 grid gap-4">
             <a href="{{ route('login') }}" class="w-full inline-flex justify-center items-center px-4 py-3 bg-gray-900 border border-gray-900 rounded-xl font-semibold text-sm text-white hover:bg-gray-800 transition shadow-sm">
                 Se connecter
             </a>
+
+            @if (Route::has('register'))
+                <a href="{{ route('register') }}" class="w-full inline-flex justify-center items-center px-4 py-3 bg-white border border-gray-200 rounded-xl font-semibold text-sm text-gray-900 hover:bg-gray-50 transition shadow-sm">
+                    Créer un compte (sur invitation)
+                </a>
+            @endif
 
             <div class="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm">
                 <div class="font-semibold text-gray-900">Inscription</div>

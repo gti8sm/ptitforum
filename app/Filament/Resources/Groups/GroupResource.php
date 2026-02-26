@@ -20,6 +20,14 @@ class GroupResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    protected static ?string $navigationLabel = 'Groupes';
+
+    protected static ?string $modelLabel = 'Groupe';
+
+    protected static ?string $pluralModelLabel = 'Groupes';
+
+    protected static ?string $navigationGroup = 'Forum';
+
     public static function form(Schema $schema): Schema
     {
         return GroupForm::configure($schema);

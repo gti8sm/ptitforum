@@ -15,17 +15,22 @@ class ThreadForm
         return $schema
             ->components([
                 Select::make('group_id')
+                    ->label('Groupe')
                     ->relationship('group', 'name')
                     ->searchable()
                     ->preload()
                     ->required(),
                 TextInput::make('title')
+                    ->label('Titre')
                     ->required(),
                 Textarea::make('body')
+                    ->label('Description')
                     ->columnSpanFull(),
                 Toggle::make('is_pinned')
+                    ->label('Épinglé')
                     ->required(),
                 Toggle::make('is_locked')
+                    ->label('Verrouillé')
                     ->required(),
             ]);
     }

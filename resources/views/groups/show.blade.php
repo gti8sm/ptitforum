@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex flex-col gap-2">
             <div class="text-sm text-gray-600">
-                <a href="{{ route('dashboard') }}" class="hover:text-gray-900 transition">Mes groupes</a>
+                <a href="{{ route('dashboard') }}" class="hover:text-gray-900 transition">Groupes</a>
                 <span class="text-gray-400">/</span>
                 <span class="text-gray-600">{{ $group->name }}</span>
             </div>
