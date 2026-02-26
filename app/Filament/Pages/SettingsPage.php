@@ -4,7 +4,7 @@ namespace App\Filament\Pages;
 
 use App\Support\Settings;
 use Filament\Actions\Action;
-use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -50,45 +50,44 @@ class SettingsPage extends Page
         return $schema
             ->statePath('data')
             ->components([
-                Section::make('Site')
-                    ->schema([
-                        TextInput::make('site_title')
-                            ->label('Titre du site')
-                            ->required()
-                            ->maxLength(255),
-                    ]),
+                Placeholder::make('site_heading')
+                    ->label('')
+                    ->content('Site'),
+                TextInput::make('site_title')
+                    ->label('Titre du site')
+                    ->required()
+                    ->maxLength(255),
 
-                Section::make('E-mails (SMTP)')
-                    ->schema([
-                        TextInput::make('smtp_host')
-                            ->label('Hôte SMTP')
-                            ->maxLength(255),
-                        TextInput::make('smtp_port')
-                            ->label('Port SMTP')
-                            ->numeric(),
-                        TextInput::make('smtp_username')
-                            ->label('Utilisateur SMTP')
-                            ->maxLength(255),
-                        TextInput::make('smtp_password')
-                            ->label('Mot de passe SMTP')
-                            ->password()
-                            ->revealable(),
-                        Select::make('smtp_encryption')
-                            ->label('Chiffrement')
-                            ->options([
-                                '' => 'aucun',
-                                'tls' => 'tls',
-                                'ssl' => 'ssl',
-                            ]),
-                        TextInput::make('mail_from_address')
-                            ->label('Adresse expéditeur')
-                            ->email()
-                            ->maxLength(255),
-                        TextInput::make('mail_from_name')
-                            ->label('Nom expéditeur')
-                            ->maxLength(255),
-                    ])
-                    ->columns(2),
+                Placeholder::make('smtp_heading')
+                    ->label('')
+                    ->content('E-mails (SMTP)'),
+                TextInput::make('smtp_host')
+                    ->label('Hôte SMTP')
+                    ->maxLength(255),
+                TextInput::make('smtp_port')
+                    ->label('Port SMTP')
+                    ->numeric(),
+                TextInput::make('smtp_username')
+                    ->label('Utilisateur SMTP')
+                    ->maxLength(255),
+                TextInput::make('smtp_password')
+                    ->label('Mot de passe SMTP')
+                    ->password()
+                    ->revealable(),
+                Select::make('smtp_encryption')
+                    ->label('Chiffrement')
+                    ->options([
+                        '' => 'aucun',
+                        'tls' => 'tls',
+                        'ssl' => 'ssl',
+                    ]),
+                TextInput::make('mail_from_address')
+                    ->label('Adresse expéditeur')
+                    ->email()
+                    ->maxLength(255),
+                TextInput::make('mail_from_name')
+                    ->label('Nom expéditeur')
+                    ->maxLength(255),
             ]);
     }
 
