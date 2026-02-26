@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\InvitationAcceptanceController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\PollController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\GroupPlanningController;
 use App\Http\Controllers\NotificationController;
@@ -45,8 +46,13 @@ Route::middleware('auth')->group(function () {
     Route::put('/groups/{group}/planning/{event}/tasks/{task}', [GroupPlanningController::class, 'updateTaskStatus'])->name('planning.tasks.update-status');
     Route::delete('/groups/{group}/planning/{event}/tasks/{task}', [GroupPlanningController::class, 'destroyTask'])->name('planning.tasks.destroy');
 
+    Route::get('/groups/{group}/threads/create', [ThreadController::class, 'create'])->name('threads.create');
+    Route::post('/groups/{group}/threads', [ThreadController::class, 'store'])->name('threads.store');
+
     Route::get('/groups/{group}/{thread}', [ThreadController::class, 'show'])->name('threads.show');
     Route::post('/groups/{group}/{thread}/posts', [ThreadController::class, 'storePost'])->name('threads.posts.store');
+    Route::post('/groups/{group}/{thread}/poll', [PollController::class, 'store'])->name('threads.polls.store');
+    Route::post('/groups/{group}/{thread}/poll/vote', [PollController::class, 'vote'])->name('threads.polls.vote');
     Route::post('/groups/{group}/{thread}/toggle-pin', [ThreadController::class, 'togglePin'])->name('threads.toggle-pin');
     Route::post('/groups/{group}/{thread}/toggle-lock', [ThreadController::class, 'toggleLock'])->name('threads.toggle-lock');
     Route::delete('/groups/{group}/{thread}/posts/{post}', [ThreadController::class, 'destroyPost'])->name('threads.posts.destroy');

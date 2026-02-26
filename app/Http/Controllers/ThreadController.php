@@ -9,10 +9,54 @@ use App\Models\ThreadRead;
 use App\Notifications\MentionedInThreadNotification;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ThreadController extends Controller
 {
+    public function create(Request $request, Group $group): View
+    {
+        $user = $request->user();
+
+        $isAllowed = $user->role === 'admin' || $group->isMember($user);
+        abort_unless($isAllowed, 403);
+
+        $canModerate = $user->role === 'admin' || $group->isModerator($user);
+        abort_unless($canModerate, 403);
+
+        return view('threads.create', [
+            'group' => $group,
+        ]);
+    }
+
+    public function store(Request $request, Group $group): RedirectResponse
+    {
+        $user = $request->user();
+
+        $isAllowed = $user->role === 'admin' || $group->isMember($user);
+        abort_unless($isAllowed, 403);
+
+        $canModerate = $user->role === 'admin' || $group->isModerator($user);
+        abort_unless($canModerate, 403);
+
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'body' => ['nullable', 'string', 'max:10000'],
+        ]);
+
+        $thread = Thread::query()->create([
+            'group_id' => $group->id,
+            'created_by' => $user->id,
+            'title' => $validated['title'],
+            'body' => $validated['body'] ?? null,
+            'is_pinned' => false,
+            'is_locked' => false,
+            'last_activity_at' => now(),
+        ]);
+
+        return redirect()->route('threads.show', [$group, $thread]);
+    }
+
     public function show(Request $request, Group $group, Thread $thread): View
     {
         $user = $request->user();
@@ -25,6 +69,11 @@ class ThreadController extends Controller
         $canModerate = $user->role === 'admin' || $group->isModerator($user);
 
         $thread->loadMissing(['creator']);
+
+        $poll = $thread
+            ->poll()
+            ->with(['options', 'votes'])
+            ->first();
 
         $posts = $thread
             ->posts()
@@ -65,6 +114,7 @@ class ThreadController extends Controller
             'thread' => $thread,
             'posts' => $posts,
             'canModerate' => $canModerate,
+            'poll' => $poll,
         ]);
     }
 
@@ -81,12 +131,28 @@ class ThreadController extends Controller
 
         $validated = $request->validate([
             'body' => ['required', 'string', 'max:10000'],
+            'images' => ['nullable', 'array', 'max:4'],
+            'images.*' => ['file', 'image', 'max:4096'],
         ]);
+
+        $attachments = [];
+
+        foreach (($validated['images'] ?? []) as $file) {
+            $path = $file->store('posts', 'public');
+            $attachments[] = [
+                'type' => 'image',
+                'disk' => 'public',
+                'path' => $path,
+                'url' => Storage::disk('public')->url($path),
+                'name' => $file->getClientOriginalName(),
+            ];
+        }
 
         $post = Post::query()->create([
             'thread_id' => $thread->id,
             'user_id' => $user->id,
             'body' => $validated['body'],
+            'attachments' => empty($attachments) ? null : $attachments,
         ]);
 
         preg_match_all('/(^|\s)@([\p{L}0-9_\.-]{2,64})/u', $post->body, $matches);

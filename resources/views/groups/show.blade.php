@@ -57,6 +57,9 @@
                     </a>
 
                     @if($canModerate)
+                        <a href="{{ route('threads.create', $group) }}" class="shrink-0 inline-flex items-center px-4 py-2 bg-gray-900 border border-gray-900 rounded-lg text-sm font-semibold text-white hover:bg-gray-800 transition">
+                            Nouveau sujet
+                        </a>
                         <a href="/admin/threads" class="shrink-0 inline-flex items-center px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-semibold text-gray-900 hover:bg-gray-50 transition">
                             Gérer les sujets
                         </a>

@@ -26,7 +26,7 @@ class GroupResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Groupes';
 
-    protected static ?string $navigationGroup = 'Forum';
+    protected static string|\UnitEnum|null $navigationGroup = 'Forum';
 
     public static function form(Schema $schema): Schema
     {

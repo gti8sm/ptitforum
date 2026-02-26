@@ -26,7 +26,7 @@ class InvitationResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Invitations';
 
-    protected static ?string $navigationGroup = 'Accès';
+    protected static string|\UnitEnum|null $navigationGroup = 'Accès';
 
     public static function form(Schema $schema): Schema
     {
