@@ -12,6 +12,7 @@ use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
+use Illuminate\Support\Facades\Mail;
 
 class SettingsPage extends Page
 {
@@ -97,6 +98,40 @@ class SettingsPage extends Page
             Action::make('save')
                 ->label('Enregistrer')
                 ->action(fn () => $this->save()),
+
+            Action::make('test_email')
+                ->label('Tester l’envoi d’email')
+                ->icon(Heroicon::OutlinedPaperAirplane)
+                ->form([
+                    TextInput::make('to')
+                        ->label('Destinataire')
+                        ->email()
+                        ->required()
+                        ->default(fn (): ?string => auth()->user()?->email),
+                ])
+                ->action(function (array $data): void {
+                    try {
+                        $to = $data['to'] ?? null;
+
+                        Mail::raw(
+                            'Email de test (SMTP) – PtitForum',
+                            fn ($message) => $message
+                                ->to($to)
+                                ->subject('Test SMTP – PtitForum'),
+                        );
+
+                        Notification::make()
+                            ->title('Email de test envoyé')
+                            ->success()
+                            ->send();
+                    } catch (\Throwable $e) {
+                        Notification::make()
+                            ->title('Échec envoi email')
+                            ->body($e->getMessage())
+                            ->danger()
+                            ->send();
+                    }
+                }),
         ];
     }
 
